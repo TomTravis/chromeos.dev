@@ -28,7 +28,6 @@ const { normalizeTag } = require('../../lib/helpers/tags');
  */
 function determineFeaturedStories(content) {
   const home = [];
-  let landing;
 
   for (const c of content) {
     if (home.length < 3) {
@@ -38,11 +37,7 @@ function determineFeaturedStories(content) {
     }
   }
 
-  if (home.length > 1) {
-    landing = home[1];
-  } else {
-    landing = home[0];
-  }
+  const landing = home[0];
 
   return {
     home,
@@ -126,6 +121,7 @@ module.exports = {
   nav: l10nFallback('nav'),
   cookies: l10nFallback('cookieDisclaimer'),
   search: l10nFallback('search'),
+  microcopy: l10nFallback('microcopy'),
   showNewsletter: (data) => (l10nFallback('hideNewsletter')(data) ? false : 'show'),
   subscribe: l10nFallback('newsletter.subscribe'),
   og: (data) => {
@@ -372,7 +368,7 @@ module.exports = {
 
       collections.filteredPosts = collections.posts.filter((i) => i.url !== get(collections, 'featured.post.cta.url'));
 
-      collections.homePosts = collections.posts.slice(0, 3);
+      collections.homePosts = collections.filteredPosts.slice(0, 3);
     }
 
     if (stories && stories.length >= 1) {
